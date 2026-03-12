@@ -1,0 +1,725 @@
+/* ─── Reset & Base ──────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+html[dir="rtl"] #back-btn {
+    order: 2;
+}
+
+html[dir="rtl"] #game-header {
+    direction: rtl;
+}
+
+html[dir="rtl"] .card-back {
+    direction: ltr;
+}
+
+html[dir="rtl"] #game-stats {
+    direction: rtl;
+}
+
+#app {
+    max-width: 900px;
+    width: 100%;
+}
+
+/* ─── Header ────────────────────────────────────────────────────── */
+header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 8px;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+header .subtitle {
+    font-size: 1.1rem;
+    opacity: 0.7;
+}
+
+/* ─── Game Selector ─────────────────────────────────────────────── */
+#game-selector {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.game-btn {
+    background: linear-gradient(145deg, #1e1b4b, #312e81);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 30px 40px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    min-width: 200px;
+}
+
+.game-btn:hover {
+    transform: translateY(-4px);
+    border-color: rgba(139, 92, 246, 0.6);
+    box-shadow: 0 8px 30px rgba(139, 92, 246, 0.3);
+    background: linear-gradient(145deg, #312e81, #4338ca);
+}
+
+.game-btn:active {
+    transform: translateY(-1px);
+}
+
+.game-btn .game-icon {
+    font-size: 3rem;
+}
+
+.game-btn .game-label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.4;
+}
+
+.game-btn .game-label small {
+    font-weight: 400;
+    opacity: 0.7;
+    font-size: 0.85rem;
+}
+
+.game-btn.active {
+    border-color: #8b5cf6;
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+}
+
+/* ─── Shared Header Bar ─────────────────────────────────────────── */
+#game-area,
+#quiz-area {
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#game-header,
+#quiz-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+    padding: 16px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+#back-btn,
+#quiz-back-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+#back-btn:hover,
+#quiz-back-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+#game-title,
+#quiz-title {
+    flex: 1;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+#game-stats,
+#quiz-stats {
+    display: flex;
+    gap: 12px;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+#game-stats span,
+#quiz-stats span {
+    background: rgba(139, 92, 246, 0.2);
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+#new-game-btn,
+#quiz-new-btn {
+    background: linear-gradient(135deg, #7c3aed, #6d28d9);
+    border: none;
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+#new-game-btn:hover,
+#quiz-new-btn:hover {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    transform: translateY(-1px);
+}
+
+/* ─── Board (Memory) ────────────────────────────────────────────── */
+#board {
+    display: grid;
+    gap: 12px;
+    justify-content: center;
+    padding: 20px;
+}
+
+#board.cols-4 {
+    grid-template-columns: repeat(4, 90px);
+}
+
+#board.cols-5 {
+    grid-template-columns: repeat(5, 90px);
+}
+
+.card {
+    width: 90px;
+    height: 100px;
+    perspective: 600px;
+    cursor: pointer;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease;
+    transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card.matched .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-front {
+    background: linear-gradient(145deg, #312e81, #4338ca);
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 1.8rem;
+}
+
+.card-front::after {
+    content: "?";
+}
+
+.card-back {
+    background: linear-gradient(145deg, #1e1b4b, #312e81);
+    color: #e0e7ff;
+    transform: rotateY(180deg);
+}
+
+.card:hover:not(.flipped):not(.matched):not(.locked) .card-front {
+    border-color: rgba(139, 92, 246, 0.5);
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
+}
+
+.card.matched .card-back {
+    background: linear-gradient(145deg, #065f46, #047857);
+    border-color: rgba(16, 185, 129, 0.5);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+    color: #a7f3d0;
+}
+
+.card.locked {
+    pointer-events: none;
+}
+
+.card.mismatch .card-back {
+    background: linear-gradient(145deg, #7f1d1d, #991b1b);
+    border-color: rgba(239, 68, 68, 0.5);
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+}
+
+.card-back.hebrew {
+    font-family: "Segoe UI", Arial, sans-serif;
+    direction: rtl;
+    font-size: 2.2rem;
+}
+
+/* ─── Win Message (Memory) ──────────────────────────────────────── */
+#win-message {
+    text-align: center;
+    margin-top: 30px;
+    padding: 40px;
+    background: linear-gradient(
+        145deg,
+        rgba(16, 185, 129, 0.15),
+        rgba(5, 150, 105, 0.1)
+    );
+    border: 2px solid rgba(16, 185, 129, 0.3);
+    border-radius: 20px;
+    animation: fadeIn 0.5s ease;
+}
+
+#win-message h2 {
+    font-size: 2rem;
+    margin-bottom: 12px;
+}
+
+#win-message p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    opacity: 0.8;
+}
+
+#win-message button,
+#play-again-btn {
+    background: linear-gradient(135deg, #10b981, #059669);
+    border: none;
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+#win-message button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SYMBOL NAME QUIZ — WORD BUILDER
+   ═══════════════════════════════════════════════════════════════════ */
+
+#quiz-content {
+    text-align: center;
+    padding: 20px;
+}
+
+#quiz-symbol {
+    font-size: 7rem;
+    margin-bottom: 10px;
+    line-height: 1.2;
+    animation: bounceIn 0.5s ease;
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    60% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+#quiz-prompt {
+    font-size: 1.2rem;
+    margin-bottom: 24px;
+    opacity: 0.7;
+    font-weight: 500;
+}
+
+/* ─── Word Slots ────────────────────────────────────────────────── */
+#word-slots {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 30px;
+    direction: rtl;
+}
+
+.word-slot {
+    width: 60px;
+    height: 70px;
+    border-radius: 12px;
+    border: 3px dashed rgba(139, 92, 246, 0.4);
+    background: rgba(255, 255, 255, 0.03);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #c4b5fd;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.word-slot.current {
+    border-color: #8b5cf6;
+    border-style: solid;
+    background: rgba(139, 92, 246, 0.1);
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+    }
+}
+
+.word-slot.filled {
+    border-style: solid;
+    border-color: rgba(16, 185, 129, 0.5);
+    background: rgba(16, 185, 129, 0.1);
+    color: #6ee7b7;
+    animation: slotFill 0.3s ease;
+}
+
+@keyframes slotFill {
+    0% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.word-slot.complete {
+    border-color: rgba(16, 185, 129, 0.7);
+    background: rgba(16, 185, 129, 0.15);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+}
+
+/* ─── Letter Pool ───────────────────────────────────────────────── */
+#letter-pool {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 600px;
+    margin: 0 auto;
+    direction: rtl;
+}
+
+.pool-letter {
+    width: 58px;
+    height: 62px;
+    border-radius: 12px;
+    background: linear-gradient(145deg, #1e1b4b, #312e81);
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    color: #e0e7ff;
+    font-size: 1.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.pool-letter:hover:not(.used):not(.wrong-shake) {
+    transform: translateY(-3px);
+    border-color: rgba(139, 92, 246, 0.6);
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.3);
+    background: linear-gradient(145deg, #312e81, #4338ca);
+}
+
+.pool-letter.used {
+    opacity: 0.2;
+    cursor: default;
+    transform: scale(0.9);
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
+.pool-letter.wrong-shake {
+    animation: letterShake 0.5s ease;
+    border-color: rgba(239, 68, 68, 0.7) !important;
+    background: linear-gradient(145deg, #7f1d1d, #991b1b) !important;
+    color: #fca5a5;
+}
+
+@keyframes letterShake {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    20% {
+        transform: translateX(-6px);
+    }
+    40% {
+        transform: translateX(6px);
+    }
+    60% {
+        transform: translateX(-4px);
+    }
+    80% {
+        transform: translateX(4px);
+    }
+}
+
+/* ─── Letter Feedback ───────────────────────────────────────────── */
+#letter-feedback {
+    margin-top: 16px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    animation: fadeIn 0.3s ease;
+}
+
+#letter-feedback.wrong {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #fca5a5;
+}
+
+/* ─── Word Success ──────────────────────────────────────────────── */
+#word-success {
+    text-align: center;
+    margin-top: 24px;
+    padding: 24px;
+    background: linear-gradient(
+        145deg,
+        rgba(16, 185, 129, 0.12),
+        rgba(5, 150, 105, 0.08)
+    );
+    border: 2px solid rgba(16, 185, 129, 0.3);
+    border-radius: 16px;
+    animation: fadeIn 0.4s ease;
+}
+
+#word-success h3 {
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+    color: #6ee7b7;
+}
+
+#next-word-btn {
+    background: linear-gradient(135deg, #7c3aed, #6d28d9);
+    border: none;
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.05rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+#next-word-btn:hover {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    transform: translateY(-2px);
+}
+
+/* ─── Quiz Result ───────────────────────────────────────────────── */
+#quiz-result {
+    text-align: center;
+    margin-top: 30px;
+    padding: 40px;
+    border-radius: 20px;
+    animation: fadeIn 0.5s ease;
+}
+
+#quiz-result.great {
+    background: linear-gradient(
+        145deg,
+        rgba(16, 185, 129, 0.15),
+        rgba(5, 150, 105, 0.1)
+    );
+    border: 2px solid rgba(16, 185, 129, 0.3);
+}
+
+#quiz-result.ok {
+    background: linear-gradient(
+        145deg,
+        rgba(234, 179, 8, 0.15),
+        rgba(202, 138, 4, 0.1)
+    );
+    border: 2px solid rgba(234, 179, 8, 0.3);
+}
+
+#quiz-result.needs-work {
+    background: linear-gradient(
+        145deg,
+        rgba(239, 68, 68, 0.15),
+        rgba(220, 38, 38, 0.1)
+    );
+    border: 2px solid rgba(239, 68, 68, 0.3);
+}
+
+#quiz-result h2 {
+    font-size: 2rem;
+    margin-bottom: 12px;
+}
+
+#quiz-result p {
+    font-size: 1.15rem;
+    margin-bottom: 20px;
+    opacity: 0.85;
+}
+
+#quiz-play-again-btn {
+    background: linear-gradient(135deg, #10b981, #059669);
+    border: none;
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+#quiz-play-again-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+}
+
+/* ─── RTL ───────────────────────────────────────────────────────── */
+html[dir="rtl"] .card-back {
+    direction: ltr;
+}
+
+/* ─── Responsive ────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    .game-btn {
+        padding: 20px 28px;
+        min-width: 160px;
+    }
+
+    .game-btn .game-icon {
+        font-size: 2.2rem;
+    }
+
+    #board.cols-4 {
+        grid-template-columns: repeat(4, 72px);
+        gap: 8px;
+    }
+
+    #board.cols-5 {
+        grid-template-columns: repeat(5, 65px);
+        gap: 6px;
+    }
+
+    .card {
+        width: 100%;
+        height: 85px;
+    }
+
+    #game-header,
+    #quiz-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #game-title,
+    #quiz-title {
+        font-size: 1.1rem;
+    }
+
+    #quiz-symbol {
+        font-size: 5rem;
+    }
+
+    .word-slot {
+        width: 48px;
+        height: 56px;
+        font-size: 1.6rem;
+    }
+
+    .pool-letter {
+        width: 48px;
+        height: 52px;
+        font-size: 1.5rem;
+    }
+
+    #quiz-stats {
+        gap: 6px;
+    }
+
+    #quiz-stats span {
+        padding: 4px 10px;
+        font-size: 0.85rem;
+    }
+}
+
+/* ─── Space Slot (for multi-word names) ─────────────────────────── */
+.word-slot.space-slot {
+    border-color: transparent;
+    background: transparent;
+    width: 25px;
+    cursor: default;
+}
+
+.word-slot.space-slot.filled {
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
+}
+
+.word-slot.space-slot.complete {
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
+}
