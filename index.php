@@ -162,6 +162,10 @@ Flight::route('GET /', function () {
                 <button id="quiz-play-again-btn">שחקו שוב</button>
             </div>
         </div>
+        
+        <footer style="text-align: center; margin-top: 30px; padding: 15px; font-size: 16px; color: white; font-weight: bold;">
+            כל הזכויות שמורות לשי זמברובסקי shaike.zam@gmail.com
+        </footer>
     </div>
 
     <script src="/js/app.js"></script>
