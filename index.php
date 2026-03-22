@@ -6,7 +6,7 @@ use games\MemoryGameNumbers;
 use games\MemoryGameHebrew;
 use games\SymbolNameGame;
 
-// ─── API: Numbers Memory Game ───────────────────────────────────────
+// ─── API: Numbers Memory Game (DEPRECATED – logic moved to frontend js/memory-numbers.js) ───
 
 Flight::route('GET /api/memory-numbers/new', function () {
     $game = new MemoryGameNumbers();
@@ -28,7 +28,7 @@ Flight::route('POST /api/memory-numbers/flip', function () {
     Flight::json($result);
 });
 
-// ─── API: Hebrew Memory Game ────────────────────────────────────────
+// ─── API: Hebrew Memory Game (DEPRECATED – logic moved to frontend js/memory-hebrew.js) ───
 
 Flight::route('GET /api/memory-hebrew/new', function () {
     $game = new MemoryGameHebrew();
@@ -50,7 +50,7 @@ Flight::route('POST /api/memory-hebrew/flip', function () {
     Flight::json($result);
 });
 
-// ─── API: Symbol Name Game ──────────────────────────────────────────
+// ─── API: Symbol Name Game (DEPRECATED – logic moved to frontend js/symbol-name.js) ───
 
 Flight::route('GET /api/symbol-name/new', function () {
     $game = new SymbolNameGame();
@@ -100,6 +100,18 @@ Flight::route('GET /', function () {
             <button class="game-btn" data-game="symbol-name">
                 <span class="game-icon">🖼️</span>
                 <span class="game-label">איך כותבים?<br><small>בנו את המילה בעברית</small></span>
+            </button>
+            <button class="game-btn" data-game="math-10">
+                <span class="game-icon">🧮</span>
+                <span class="game-label">ועוד ופחות<br><small>עד 10</small></span>
+            </button>
+            <button class="game-btn" data-game="math-20">
+                <span class="game-icon">➕</span>
+                <span class="game-label">ועוד ופחות<br><small>עד 20</small></span>
+            </button>
+            <button class="game-btn" data-game="odd-one-out">
+                <span class="game-icon">🔍</span>
+                <span class="game-label">יוצא דופן<br><small>מי לא שייך?</small></span>
             </button>
         </nav>
 
@@ -163,13 +175,70 @@ Flight::route('GET /', function () {
             </div>
         </div>
         
+        <!-- Math Game Area -->
+        <div id="math-area" style="display:none;">
+            <div id="math-header">
+                <button id="math-back-btn">חזרה למשחקים ←</button>
+                <h2 id="math-title"></h2>
+                <div id="math-stats">
+                    <span id="math-score">נכון: 0/0</span>
+                    <span id="math-progress">שאלה: 0/0</span>
+                    <span id="math-mistakes">טעויות: 0</span>
+                </div>
+                <button id="math-new-btn">🔄 משחק חדש</button>
+            </div>
+
+            <div id="math-content">
+                <div id="math-equation"></div>
+                <div id="math-choices"></div>
+                <div id="math-feedback" style="display:none;"></div>
+            </div>
+
+            <div id="math-result" style="display:none;">
+                <h2 id="math-result-title"></h2>
+                <p id="math-result-text"></p>
+                <button id="math-play-again-btn">שחקו שוב</button>
+            </div>
+        </div>
+
+        <!-- Odd One Out Game Area -->
+        <div id="odd-area" style="display:none;">
+            <div id="odd-header">
+                <button id="odd-back-btn">חזרה למשחקים ←</button>
+                <h2 id="odd-title"></h2>
+                <div id="odd-stats">
+                    <span id="odd-score">נכון: 0/0</span>
+                    <span id="odd-progress">שאלה: 0/0</span>
+                    <span id="odd-mistakes">טעויות: 0</span>
+                </div>
+                <button id="odd-new-btn">🔄 משחק חדש</button>
+            </div>
+
+            <div id="odd-content">
+                <p id="odd-hint"></p>
+                <div id="odd-choices"></div>
+                <div id="odd-feedback" style="display:none;"></div>
+            </div>
+
+            <div id="odd-result" style="display:none;">
+                <h2 id="odd-result-title"></h2>
+                <p id="odd-result-text"></p>
+                <button id="odd-play-again-btn">שחקו שוב</button>
+            </div>
+        </div>
+
         <footer style="text-align: center; margin-top: 30px; padding: 15px; font-size: 16px; color: white; font-weight: bold;">
             כל הזכויות שמורות לשי זמברובסקי shaike.zam@gmail.com | 
             <a href="/eula" style="color: #a7f3d0; text-decoration: none;">תנאי שימוש</a>
         </footer>
     </div>
 
-    <script src="/js/app.js"></script>
+    <script src="/js/common.js"></script>
+    <script src="/js/memory-numbers.js"></script>
+    <script src="/js/memory-hebrew.js"></script>
+    <script src="/js/symbol-name.js"></script>
+    <script src="/js/math-game.js"></script>
+    <script src="/js/odd-one-out.js"></script>
 </body>
 </html>
 HTML;
@@ -363,9 +432,34 @@ Flight::route('GET /css/style.css', function () {
     readfile(__DIR__ . '/css/style.css');
 });
 
-Flight::route('GET /js/app.js', function () {
+Flight::route('GET /js/common.js', function () {
     header('Content-Type: application/javascript');
-    readfile(__DIR__ . '/js/app.js');
+    readfile(__DIR__ . '/js/common.js');
+});
+
+Flight::route('GET /js/memory-numbers.js', function () {
+    header('Content-Type: application/javascript');
+    readfile(__DIR__ . '/js/memory-numbers.js');
+});
+
+Flight::route('GET /js/memory-hebrew.js', function () {
+    header('Content-Type: application/javascript');
+    readfile(__DIR__ . '/js/memory-hebrew.js');
+});
+
+Flight::route('GET /js/symbol-name.js', function () {
+    header('Content-Type: application/javascript');
+    readfile(__DIR__ . '/js/symbol-name.js');
+});
+
+Flight::route('GET /js/math-game.js', function () {
+    header('Content-Type: application/javascript');
+    readfile(__DIR__ . '/js/math-game.js');
+});
+
+Flight::route('GET /js/odd-one-out.js', function () {
+    header('Content-Type: application/javascript');
+    readfile(__DIR__ . '/js/odd-one-out.js');
 });
 
 Flight::start();

@@ -2,6 +2,9 @@
 
 namespace games;
 
+/**
+ * @deprecated Logic moved to frontend (js/memory-hebrew.js). Kept for backward compatibility.
+ */
 class MemoryGameHebrew
 {
     private array $symbols = [

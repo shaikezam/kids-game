@@ -2,6 +2,9 @@
 
 namespace games;
 
+/**
+ * @deprecated Logic moved to frontend (js/symbol-name.js). Kept for backward compatibility.
+ */
 class SymbolNameGame
 {
     private array $symbols = [

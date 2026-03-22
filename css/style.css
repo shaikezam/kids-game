@@ -704,6 +704,524 @@ html[dir="rtl"] .card-back {
     }
 }
 
+/* ═══════════════════════════════════════════════════════════════════
+   MATH GAME — Plus & Minus
+   ═══════════════════════════════════════════════════════════════════ */
+
+#math-area {
+    animation: fadeIn 0.4s ease;
+}
+
+#math-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+    padding: 16px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+#math-back-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+#math-back-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+#math-title {
+    flex: 1;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+#math-stats {
+    display: flex;
+    gap: 12px;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+#math-stats span {
+    background: rgba(139, 92, 246, 0.2);
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+#math-new-btn {
+    background: linear-gradient(135deg, #7c3aed, #6d28d9);
+    border: none;
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+#math-new-btn:hover {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    transform: translateY(-1px);
+}
+
+#math-content {
+    text-align: center;
+    padding: 20px;
+}
+
+#math-equation {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #e0e7ff;
+    text-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+    direction: ltr;
+    animation: bounceIn 0.5s ease;
+}
+
+#math-choices {
+    display: grid;
+    grid-template-columns: repeat(2, 120px);
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.math-choice {
+    width: 120px;
+    height: 80px;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #1e1b4b, #312e81);
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    color: #e0e7ff;
+    font-size: 2rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.math-choice:hover:not(.math-correct):not(.math-wrong):not(:disabled) {
+    transform: translateY(-3px);
+    border-color: rgba(139, 92, 246, 0.6);
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.3);
+    background: linear-gradient(145deg, #312e81, #4338ca);
+}
+
+.math-choice:disabled {
+    cursor: default;
+}
+
+.math-choice.math-correct {
+    background: linear-gradient(145deg, #065f46, #047857);
+    border-color: rgba(16, 185, 129, 0.6);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+    color: #a7f3d0;
+}
+
+.math-choice.math-wrong {
+    background: linear-gradient(145deg, #7f1d1d, #991b1b);
+    border-color: rgba(239, 68, 68, 0.6);
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+    color: #fca5a5;
+    opacity: 0.5;
+}
+
+/* ─── Math Feedback ────────────────────────────────────────────────── */
+#math-feedback {
+    margin-top: 16px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    animation: fadeIn 0.3s ease;
+}
+
+.math-feedback-correct {
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #6ee7b7;
+}
+
+.math-feedback-wrong {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #fca5a5;
+}
+
+/* ─── Math Result ──────────────────────────────────────────────────── */
+#math-result {
+    text-align: center;
+    margin-top: 30px;
+    padding: 40px;
+    border-radius: 20px;
+    animation: fadeIn 0.5s ease;
+}
+
+#math-result.great {
+    background: linear-gradient(
+        145deg,
+        rgba(16, 185, 129, 0.15),
+        rgba(5, 150, 105, 0.1)
+    );
+    border: 2px solid rgba(16, 185, 129, 0.3);
+}
+
+#math-result.ok {
+    background: linear-gradient(
+        145deg,
+        rgba(234, 179, 8, 0.15),
+        rgba(202, 138, 4, 0.1)
+    );
+    border: 2px solid rgba(234, 179, 8, 0.3);
+}
+
+#math-result.needs-work {
+    background: linear-gradient(
+        145deg,
+        rgba(239, 68, 68, 0.15),
+        rgba(220, 38, 38, 0.1)
+    );
+    border: 2px solid rgba(239, 68, 68, 0.3);
+}
+
+#math-result h2 {
+    font-size: 2rem;
+    margin-bottom: 12px;
+}
+
+#math-result p {
+    font-size: 1.15rem;
+    margin-bottom: 20px;
+    opacity: 0.85;
+}
+
+#math-play-again-btn {
+    background: linear-gradient(135deg, #10b981, #059669);
+    border: none;
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+#math-play-again-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+}
+
+/* ─── Math Responsive ──────────────────────────────────────────────── */
+@media (max-width: 600px) {
+    #math-equation {
+        font-size: 2.8rem;
+    }
+
+    #math-choices {
+        grid-template-columns: repeat(2, 100px);
+        gap: 10px;
+    }
+
+    .math-choice {
+        width: 100px;
+        height: 65px;
+        font-size: 1.6rem;
+    }
+
+    #math-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #math-stats {
+        gap: 6px;
+    }
+
+    #math-stats span {
+        padding: 4px 10px;
+        font-size: 0.85rem;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   ODD ONE OUT — יוצא דופן
+   ═══════════════════════════════════════════════════════════════════ */
+
+#odd-area {
+    animation: fadeIn 0.4s ease;
+}
+
+#odd-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+    padding: 16px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+#odd-back-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+#odd-back-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+#odd-title {
+    flex: 1;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+#odd-stats {
+    display: flex;
+    gap: 12px;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+#odd-stats span {
+    background: rgba(139, 92, 246, 0.2);
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+#odd-new-btn {
+    background: linear-gradient(135deg, #7c3aed, #6d28d9);
+    border: none;
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+#odd-new-btn:hover {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    transform: translateY(-1px);
+}
+
+#odd-content {
+    text-align: center;
+    padding: 20px;
+}
+
+#odd-hint {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: #c4b5fd;
+}
+
+#odd-choices {
+    display: grid;
+    grid-template-columns: repeat(2, 140px);
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.odd-choice {
+    width: 140px;
+    height: 140px;
+    border-radius: 20px;
+    background: linear-gradient(145deg, #1e1b4b, #312e81);
+    border: 3px solid rgba(255, 255, 255, 0.12);
+    color: #e0e7ff;
+    font-size: 4rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+}
+
+.odd-choice:hover:not(.odd-correct):not(.odd-wrong):not(.odd-belongs):not(:disabled) {
+    transform: translateY(-4px) scale(1.05);
+    border-color: rgba(139, 92, 246, 0.6);
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.35);
+    background: linear-gradient(145deg, #312e81, #4338ca);
+}
+
+.odd-choice:disabled {
+    cursor: default;
+}
+
+.odd-choice.odd-correct {
+    background: linear-gradient(145deg, #7f1d1d, #991b1b);
+    border-color: rgba(239, 68, 68, 0.7);
+    box-shadow: 0 0 25px rgba(239, 68, 68, 0.4);
+    animation: oddPop 0.4s ease;
+}
+
+.odd-choice.odd-belongs {
+    background: linear-gradient(145deg, #065f46, #047857);
+    border-color: rgba(16, 185, 129, 0.5);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+    opacity: 0.7;
+}
+
+.odd-choice.odd-wrong {
+    border-color: rgba(234, 179, 8, 0.6);
+    box-shadow: 0 0 15px rgba(234, 179, 8, 0.3);
+    opacity: 0.4;
+    animation: letterShake 0.5s ease;
+}
+
+@keyframes oddPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+}
+
+/* ─── Odd Feedback ─────────────────────────────────────────────────── */
+#odd-feedback {
+    margin-top: 20px;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    animation: fadeIn 0.3s ease;
+}
+
+.odd-feedback-correct {
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #6ee7b7;
+}
+
+.odd-feedback-wrong {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #fca5a5;
+}
+
+/* ─── Odd Result ───────────────────────────────────────────────────── */
+#odd-result {
+    text-align: center;
+    margin-top: 30px;
+    padding: 40px;
+    border-radius: 20px;
+    animation: fadeIn 0.5s ease;
+}
+
+#odd-result.great {
+    background: linear-gradient(
+        145deg,
+        rgba(16, 185, 129, 0.15),
+        rgba(5, 150, 105, 0.1)
+    );
+    border: 2px solid rgba(16, 185, 129, 0.3);
+}
+
+#odd-result.ok {
+    background: linear-gradient(
+        145deg,
+        rgba(234, 179, 8, 0.15),
+        rgba(202, 138, 4, 0.1)
+    );
+    border: 2px solid rgba(234, 179, 8, 0.3);
+}
+
+#odd-result.needs-work {
+    background: linear-gradient(
+        145deg,
+        rgba(239, 68, 68, 0.15),
+        rgba(220, 38, 38, 0.1)
+    );
+    border: 2px solid rgba(239, 68, 68, 0.3);
+}
+
+#odd-result h2 {
+    font-size: 2rem;
+    margin-bottom: 12px;
+}
+
+#odd-result p {
+    font-size: 1.15rem;
+    margin-bottom: 20px;
+    opacity: 0.85;
+}
+
+#odd-play-again-btn {
+    background: linear-gradient(135deg, #10b981, #059669);
+    border: none;
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+#odd-play-again-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+}
+
+/* ─── Odd Responsive ───────────────────────────────────────────────── */
+@media (max-width: 600px) {
+    #odd-hint {
+        font-size: 1.1rem;
+    }
+
+    #odd-choices {
+        grid-template-columns: repeat(2, 110px);
+        gap: 12px;
+    }
+
+    .odd-choice {
+        width: 110px;
+        height: 110px;
+        font-size: 3rem;
+    }
+
+    #odd-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #odd-stats {
+        gap: 6px;
+    }
+
+    #odd-stats span {
+        padding: 4px 10px;
+        font-size: 0.85rem;
+    }
+}
+
 /* ─── Space Slot (for multi-word names) ─────────────────────────── */
 .word-slot.space-slot {
     border-color: transparent;
